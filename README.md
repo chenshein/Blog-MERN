@@ -1,4 +1,5 @@
 
+
 # 🌍 Travel Blog
 
 Welcome to the **Travel Blog**! This platform allows you to share your travel experiences, explore posts from other travelers, and build a community of adventurers worldwide.
@@ -28,8 +29,26 @@ Welcome to the **Travel Blog**! This platform allows you to share your travel ex
 -   **Backend**: Node.js, Express
 -   **Database**: MongoDB
 
-## 🛠 Installation
-run `npm install`
-and after run `npm start`
 
+## 🛠 How to Run the Project
 
+To get the project up and running, follow these steps:
+
+### Open 2 Terminals
+
+#### **Terminal 1**: Backend Server
+
+1.  Ensure that `nodemon` is installed globally. If not, run the following command:
+ `yarn global add nodemon` 
+2.  run  `yarn install`
+3.  run `nodemon index.js` 
+   
+#### **Terminal 2**: Frontend Client
+
+1.  Navigate to the `client` directory: `cd client` 
+    
+2.  run `yarn install` 
+    
+3.  Start the frontend development by running `yarn start`
+
+Enjoy! 🖥🎊
