@@ -71,7 +71,13 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/profile', (req,res) => {
+    // console.log("profileeee1111")
+
     const {token} = req.cookies;
+    if (!token) {
+        // If no token is found, the user is not logged in
+        return res.status(401).json({ error: 'Authentication required' });
+    }
     jwt.verify(token, secret, {}, (err,info) => {
         if (err) throw err;
         res.json(info);
