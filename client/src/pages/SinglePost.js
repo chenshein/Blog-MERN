@@ -1,12 +1,12 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useContext, useEffect, useState} from 'react';
 import {formatISO9075} from 'date-fns';
-
 export default function SinglePost() {
     const { id } = useParams();
     const [postInfo,setPostInfo]= useState(null)
     const [userInfo, setUserInfo] = useState(null);  //user how is login
     const [isPopUpDeleteOpen, setPopUpDeleteOpen] = useState(false);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -19,14 +19,28 @@ export default function SinglePost() {
 
     useEffect(() => {
         fetch('http://localhost:4000/profile', {
-            credentials: 'include' //  include token in the request
+            credentials: 'include' // Include token in the request
         })
-            .then(response => response.json())
-            .then(userInfo => {
-                setUserInfo(userInfo);
+            .then(response => {
+                if (response.status === 401) {
+                    // not login, redirect to login
+                    alert("In order to see the post, please login!")
+                    navigate("/login");
+                } else {
+                    return response.json();
+                }
             })
-            .catch(err => console.log(err)); // Handle errors
-    }, []);
+            .then(data => {
+                if (data) {
+                    // User is logged in, set userInfo
+                    setUserInfo(data);
+                }
+            })
+            .catch(err => {
+                console.error('Error fetching user profile:', err);
+                navigate("/login"); // Redirect to login on error
+            });
+    }, [navigate]);
 
     if (!postInfo) return ''
     const imgUrl = `http://localhost:4000/uploads/${postInfo.img.split('\\').pop()}`;
